@@ -7,8 +7,9 @@ Independent hardware security research identifying a platform-level vulnerabilit
 
 **Disclosure Timeline**
 - Jan 29, 2026: Private disclosure to Riot Games (Vanguard) via HackerOne report #35330606  
-- Jan 30, 2026: Closed ineligible as "Attacks against physical facilities" after 6 days with no human engagement or triage update  
-- Sharing redacted findings publicly to help anticheat developers strengthen defenses against hardware cheating before mass adoption
+- Jan 30, 2026: Closed ineligible as "Attacks against physical facilities" after many days with no human engagement or triage update  
+
+Now- Sharing redacted findings publicly to help anticheat developers strengthen defenses against hardware cheating before mass adoption and gets out of control
 
 **Key Vectors (Redacted)**
 1. Thunderbolt tunneling for legitimate, undetectable physical connection  
@@ -22,11 +23,8 @@ Independent hardware security research identifying a platform-level vulnerabilit
 **Impact**
 - Retrofits existing DMA hardware (Screamer M.2, Karbon FPGA, etc.) to stealth mode for $50–$150  
 - Universal threat to laptops (70%+ gaming market) and desktops with TB ports  
-- No easy patch without breaking eGPUs/docks/SSDs for legitimate users  
+- No easy patch without breaking eGPUs/docks/SSDs for legitimate users anticheats want nothing to do with it? 
 
- ![Enclosure open - M.2 slot ready for DMA card](tb-enclosure-open.jpg)
-![DMA card fit in slot](dma-card-fit.jpg)
-![Closed enclosure with USB-C](tb-enclosure-closed.jpg)
 
 **Mitigations Proposed**
 - Memory access attribution via Intel PT  
@@ -43,5 +41,7 @@ Independent hardware security research identifying a platform-level vulnerabilit
 I am not exploiting or selling this. This is defensive research to help close hardware cheating gaps. If you represent an anticheat vendor and want to discuss under NDA, reach out.
 
 No PoC code included — redacted for responsible disclosure.
+## Full Redacted Disclosure
 
+[Download PDF](thunderbolt-dma-bypass-disclosure-redacted.pdf) – complete writeup .reply from hackerone saying security doesnt matter dodging payment on big finding.
 Hardware security matters.
