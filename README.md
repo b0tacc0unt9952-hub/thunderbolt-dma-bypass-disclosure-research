@@ -81,6 +81,10 @@ Now- Sharing redacted findings publicly to help anticheat developers strengthen 
 - Retrofits existing DMA hardware (Screamer M.2, Karbon FPGA, etc.) to stealth mode for $50–$150  
 - Universal threat to laptops (70%+ gaming market) and desktops with TB ports  
 - No easy patch without breaking eGPUs/docks/SSDs for legitimate users anticheats want nothing to do with it? 
+## Firmware Quality Note (From Cheat Community Feedback)
+Prevention (BME flip, driver blocks) fails behind TB controllers due to abstraction — that's why this chain works.  
+
+Detection (firmware scan, behavioral ML) can still flag bad spoofs (missing SMART data, anomalous I/O). Good firmware (1:1-like clone of Samsung 980/WD SN850 + I/O mimic) survives long-term — as seen in community reports (May 2025 onward). Bad FW = detected in days. Quality matters.
 
 ## Prevention vs Detection (Important Distinction)
 Anti-cheats use prevention (BME bit flip, driver blocks) to stop DMA before it starts — this fails behind TB controllers due to abstraction.Firmware doesn't need to be perfect 1-to-1 to beat prevention — good VID/PID + config space spoof is enough for most ACs (they don't deep-scan every SSD).the chain wins because prevention is broken by TB abstraction — direct card gets BME-flipped and flagged, enclosure + spoofed firmware sneaks past both.Good Firmware (Beats Vanguard fw Most Detection, 80–90% UD)
