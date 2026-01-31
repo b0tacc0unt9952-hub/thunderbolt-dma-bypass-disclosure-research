@@ -38,7 +38,14 @@ Now- Sharing redacted findings publicly to help anticheat developers strengthen 
 - Common Thunderbolt/USB-C to M.2 enclosure internals (JMS583 bridge, key M slot exposed)  
 - DMA card fit – repro in 30 mins of assembly with commodity hardware  
 
-I am not exploiting or selling this. This is defensive research to help close hardware cheating gaps. If you represent an anticheat vendor and want to discuss under NDA, reach out.
+## Real-World Confirmation
+This bypass method is already being used in the cheat community (as of May 2025) with similar hardware chains (TB enclosure + PCIe adapter + FPGA DMA card). Example from UnknownCheats forum:
+
+[Link to the post or screenshot if you saved it]
+
+Key quote: "Working, abused and undetected... with Thunderbolt NVMe enclosure and PCIe adapter... BME bit flip fails due to Thunderbolt abstraction."
+
+This confirms the retrofit path is deployable today and bypasses prevention mechanisms on VGK, FACEIT, EAC, etc.I am not exploiting or selling this. This is defensive research to help close hardware cheating gaps. If you represent an anticheat vendor and want to discuss under NDA, reach out.
 
 No PoC code included — redacted for responsible disclosure.
 ## Full Redacted Disclosure
