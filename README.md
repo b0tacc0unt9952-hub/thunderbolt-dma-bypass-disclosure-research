@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>Platform-level hardware bypass affecting kernel-level anticheats</strong><br>
-  Disclosed privately to Riot Games (Vanguard) – closed ineligible after 6 days of silence.
+  Disclosed privately to Riot Games (Vanguard) – closed ineligible after days of silence.
 </p>
 
 <p align="center">
@@ -23,10 +23,10 @@
 </p>
 
 <p align="center">
-  <strong>Hardware Photos ↓</strong> (real commodity setup used for repro)
+  <strong>Hardware Photos ↓</strong> (real setup used for repro)
 </p>
 
-<!-- YOUR FULL ORIGINAL CONTENT GOES HERE BELOW THIS LINE -->
+<!--  FULL ORIGINAL CONTENT GOES HERE BELOW THIS LINE -->
 ## Disclosure Timeline
 - Jan 29, 2026: Private disclosure to Riot Games (Vanguard) via HackerOne #35330606  
 - Jan 30, 2026: Closed ineligible as "Attacks against physical facilities" after 6 days with no human response  
@@ -122,7 +122,7 @@ Detection (scanning firmware hash, behavioral I/O, anomalous descriptors) can st
 ## Real-World Confirmation
 This bypass method is already being used in the cheat community (as of May 2025) with similar hardware chains (TB enclosure + PCIe adapter + FPGA DMA card). Example from UnknownCheats forum:
 
-[Link to the post or screenshot if you saved it]
+[[Link to the post]](https://www.unknowncheats.me/forum/anti-cheat-bypass/702960-anti-cheats-bypass-using-external-thunderbolt-enclosure-pcileech-vgk-faceit.html)
 
 Key quote: "Working, abused and undetected... with Thunderbolt NVMe enclosure and PCIe adapter... BME bit flip fails due to Thunderbolt abstraction."
 <img width="680" height="856" alt="4189" src="https://github.com/user-attachments/assets/cf481edd-97a4-438b-8c03-46af6794207c" />
@@ -139,6 +139,9 @@ Basic: VID/PID + class code + queue depth (1024) → beats prevention + lazy det
 Good: Add SMART/Identify Controller (model, serial, firmware version, power-on hours) + power states mimic.
 
 God-tier: Full PCIe config space dump + I/O behavioral mask (TRIM every 10s, garbage collection bursts) + USB/XHCI descriptors if TB bridge leaks them.
+
+## Advanced Vector: TB Controller Emulation (Future-Proof Stealth)
+By emulating the full TB controller firmware (dumped from real Intel chips), downstream DMA devices can be completely hidden — host sees "TB controller present, no accessory". Prevention fails (BME flip doesn't reach emulated device), detection requires deep TB stack scan (rare). Extremely hard/expensive (high-end FPGA + reverse-engineering), but possible for god-tier UD.
 
 Tools:
 FPGA bitstream (pcileech-fpga base + NVMe emulation hooks)
