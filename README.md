@@ -13,6 +13,7 @@ Independent hardware security research identifying a platform-level vulnerabilit
 **Key Vectors (Redacted)**
 1. Thunderbolt tunneling for legitimate, undetectable physical connection  
 2. Signed driver chain (Intel TB stack) – no unsigned code detection  
+<img width="841" height="1515" alt="4082" src="https://github.com/user-attachments/assets/6f507213-0471-4231-829e-ecf5f2b5f261" />
 3. Firmware spoofing as benign NVMe/eGPU device  
 4. DMA reads without CPU attribution  
 5. Behavioral detection gap – novel signature, months to train ML models  
@@ -22,6 +23,10 @@ Independent hardware security research identifying a platform-level vulnerabilit
 - Retrofits existing DMA hardware (Screamer M.2, Karbon FPGA, etc.) to stealth mode for $50–$150  
 - Universal threat to laptops (70%+ gaming market) and desktops with TB ports  
 - No easy patch without breaking eGPUs/docks/SSDs for legitimate users  
+
+ ![Enclosure open - M.2 slot ready for DMA card](tb-enclosure-open.jpg)
+![DMA card fit in slot](dma-card-fit.jpg)
+![Closed enclosure with USB-C](tb-enclosure-closed.jpg)
 
 **Mitigations Proposed**
 - Memory access attribution via Intel PT  
