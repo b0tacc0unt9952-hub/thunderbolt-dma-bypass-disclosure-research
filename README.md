@@ -28,11 +28,9 @@
   </p>
 
   <p>
-    <strong>Hardware Photos</strong> ↓ (real commodity setup used for repro)
-  </p>
-</div>
+    <strong>Hardware Photos</strong> ↓
 
-<!-- Your current content goes here after the banner 
+<img src="banner.jpg" alt="Thunderbolt DMA Bypass Banner" width="100%">
 
 Redacted research on Thunderbolt PCIe DMA bypass via firmware spoofing and commodity adapters. Privately disclosed to Riot Games (HackerOne #35330606) on Jan 29, 2026. Closed ineligible as "physical facilities" after 6 days with no human response. Shared defensively to help anticheat teams strengthen hardware protections against cheating.
 
@@ -72,7 +70,9 @@ No anomalies, no flags.Why it works thru Microsoft drivers: Drivers load the "SS
   Vanguard can't block without breaking real SSDs for legit players. TB tunneling hides the real DMA card behind the spoof. No "leak" — it's all abstracted.Odds: 95%+ UD for years if you avoid behavioral spikes. Example: Custom FPGA bitstream with full NVMe emulation (open-source NVMe CLI base + covert DMA hook).
    Bottom line: TB setup is not the same as direct plug — direct plug leaks DMA bits on enumeration (PCIe VID/PID visible, BME flip works). TB enclosure abstracts it — the DMA "bits" are tunneled and spoofed, so Microsoft drivers see legit SSD/eGPU, Vanguard snoops but sees nothing sus if firmware is good/god-tier. It's like wearing a mask to a party — bad mask = caught, good mask = party on.
 <img width="3965" height="2239" alt="4186" src="https://github.com/user-attachments/assets/b09033c3-7024-4555-800c-0ee50b2c1bed" />
-    Edge (Why This Works for anyone)
+  
+Edge (Why This Works for anyone)
+		
 TB + enclosure = prevention bypassed by default (BME flip fails on abstraction).
 Good firmware = detection bypassed (looks 1-to-1 legit).
 Microsoft drivers = the enabler — they load the spoofed device and allow DMA (can't block without breaking storage for everyone).this setup is better than direct plug — less leak risk, portable, stealthy. bad firmware is a six-pack in your jacket, TB is hiding it in a hollowed-out watermelon. 😂
