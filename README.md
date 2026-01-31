@@ -29,7 +29,7 @@
 <!--  FULL ORIGINAL CONTENT GOES HERE BELOW THIS LINE -->
 ## Disclosure Timeline
 - Jan 29, 2026: Private disclosure to Riot Games (Vanguard) via HackerOne #35330606  
-- Jan 30, 2026: Closed ineligible as "Attacks against physical facilities" after 6 days with no human response  
+- Jan 30, 2026: Closed ineligible as "Attacks against physical facilities" after days with no human response  
 
 ## Key Vectors (Redacted)
 1. Thunderbolt tunneling for legitimate, undetectable physical connection  
