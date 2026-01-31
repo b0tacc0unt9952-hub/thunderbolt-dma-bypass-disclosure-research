@@ -32,8 +32,8 @@
   </p>
 </div>
 
-<!-- Your current content goes here after the banner -->
-# thunderbolt-dma-bypass-disclosure-research
+<!-- Your current content goes here after the banner 
+
 Redacted research on Thunderbolt PCIe DMA bypass via firmware spoofing and commodity adapters. Privately disclosed to Riot Games (HackerOne #35330606) on Jan 29, 2026. Closed ineligible as "physical facilities" after 6 days with no human response. Shared defensively to help anticheat teams strengthen hardware protections against cheating.
 
 # Thunderbolt PCIe DMA Bypass – Defensive Disclosure
