@@ -1,3 +1,38 @@
+<div align="center">
+  <img src="https://via.placeholder.com/1200x300/0D1117/00FF9F?text=Thunderbolt+DMA+Bypass+Research" alt="Thunderbolt DMA Bypass Banner" width="100%">
+  <h1>Thunderbolt PCIe DMA Bypass<br>Defensive Disclosure & Threat Model</h1>
+
+  <p>
+    <strong>Platform-level hardware bypass affecting kernel-level anticheats</strong><br>
+    Disclosed privately to Riot Games (Vanguard) — closed ineligible after 6 days of silence.
+  </p>
+
+  <p>
+    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/stargazers">
+      <img src="https://img.shields.io/github/stars/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=social" alt="GitHub stars">
+    </a>
+    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/forks">
+      <img src="https://img.shields.io/github/forks/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=social" alt="GitHub forks">
+    </a>
+    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/issues">
+      <img src="https://img.shields.io/github/issues/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=flat-square" alt="Issues">
+    </a>
+    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/releases">
+      <img src="https://img.shields.io/github/v/release/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=flat-square" alt="Latest Release">
+    </a>
+  </p>
+
+  <p>
+    ⚠️ <strong>Defensive research only</strong> — not for exploitation or sale.<br>
+    Shared after responsible disclosure attempt was ignored.
+  </p>
+
+  <p>
+    <strong>Hardware Photos</strong> ↓ (real commodity setup used for repro)
+  </p>
+</div>
+
+<!-- Your current content goes here after the banner -->
 # thunderbolt-dma-bypass-disclosure-research
 Redacted research on Thunderbolt PCIe DMA bypass via firmware spoofing and commodity adapters. Privately disclosed to Riot Games (HackerOne #35330606) on Jan 29, 2026. Closed ineligible as "physical facilities" after 6 days with no human response. Shared defensively to help anticheat teams strengthen hardware protections against cheating.
 
@@ -36,7 +71,7 @@ No anomalies, no flags.Why it works thru Microsoft drivers: Drivers load the "SS
 
   Vanguard can't block without breaking real SSDs for legit players. TB tunneling hides the real DMA card behind the spoof. No "leak" — it's all abstracted.Odds: 95%+ UD for years if you avoid behavioral spikes. Example: Custom FPGA bitstream with full NVMe emulation (open-source NVMe CLI base + covert DMA hook).
    Bottom line: TB setup is not the same as direct plug — direct plug leaks DMA bits on enumeration (PCIe VID/PID visible, BME flip works). TB enclosure abstracts it — the DMA "bits" are tunneled and spoofed, so Microsoft drivers see legit SSD/eGPU, Vanguard snoops but sees nothing sus if firmware is good/god-tier. It's like wearing a mask to a party — bad mask = caught, good mask = party on.
- 
+<img width="3965" height="2239" alt="4186" src="https://github.com/user-attachments/assets/b09033c3-7024-4555-800c-0ee50b2c1bed" />
     Edge (Why This Works for anyone)
 TB + enclosure = prevention bypassed by default (BME flip fails on abstraction).
 Good firmware = detection bypassed (looks 1-to-1 legit).
@@ -62,6 +97,7 @@ This bypass method is already being used in the cheat community (as of May 2025)
 [Link to the post or screenshot if you saved it]
 
 Key quote: "Working, abused and undetected... with Thunderbolt NVMe enclosure and PCIe adapter... BME bit flip fails due to Thunderbolt abstraction."
+<img width="680" height="856" alt="4189" src="https://github.com/user-attachments/assets/cf481edd-97a4-438b-8c03-46af6794207c" />
 
 This confirms the retrofit path is deployable today and bypasses prevention mechanisms on VGK, FACEIT, EAC, etc.I am not exploiting or selling this. This is defensive research to help close hardware cheating gaps. If you represent an anticheat vendor and want to discuss under NDA, reach out. but all in all buying a thunderbolt and plugging it in makes you go god mode the Full 1:1 clone (exact firmware dump of real SSD) = 95%+ UD for years — no scan flags, perfect behavioral mimic.
 Good spoof (match VID/PID, basic config, SMART basics, I/O tuning) = 80–90% UD — beats most scans unless Vanguard deep-dives every external SSD (they don't, performance killer).
