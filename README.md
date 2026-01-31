@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://via.placeholder.com/1200x300/0D1117/00FF9F?text=Thunderbolt+DMA+Bypass+Research" alt="Thunderbolt DMA Bypass Banner" width="100%">
-</p>
-
 <h1 align="center">Thunderbolt PCIe DMA Bypass<br>Defensive Disclosure & Threat Model</h1>
 
 <p align="center">
