@@ -1,36 +1,64 @@
-<div align="center">
+<p align="center">
   <img src="https://via.placeholder.com/1200x300/0D1117/00FF9F?text=Thunderbolt+DMA+Bypass+Research" alt="Thunderbolt DMA Bypass Banner" width="100%">
-  <h1>Thunderbolt PCIe DMA Bypass<br>Defensive Disclosure & Threat Model</h1>
+</p>
 
-  <p>
-    <strong>Platform-level hardware bypass affecting kernel-level anticheats</strong><br>
-    Disclosed privately to Riot Games (Vanguard) — closed ineligible after 6 days of silence.
-  </p>
+<h1 align="center">Thunderbolt PCIe DMA Bypass<br>Defensive Disclosure & Threat Model</h1>
 
-  <p>
-    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/stargazers">
-      <img src="https://img.shields.io/github/stars/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=social" alt="GitHub stars">
-    </a>
-    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/forks">
-      <img src="https://img.shields.io/github/forks/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=social" alt="GitHub forks">
-    </a>
-    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/issues">
-      <img src="https://img.shields.io/github/issues/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=flat-square" alt="Issues">
-    </a>
-    <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/releases">
-      <img src="https://img.shields.io/github/v/release/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=flat-square" alt="Latest Release">
-    </a>
-  </p>
+<p align="center">
+  <strong>Platform-level hardware bypass affecting kernel-level anticheats</strong><br>
+  Disclosed privately to Riot Games (Vanguard) – closed ineligible after 6 days of silence.
+</p>
 
-  <p>
-    ⚠️ <strong>Defensive research only</strong> — not for exploitation or sale.<br>
-    Shared after responsible disclosure attempt was ignored.
-  </p>
+<p align="center">
+  <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/stargazers">
+    <img src="https://img.shields.io/github/stars/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=social" alt="GitHub stars">
+  </a>
+  <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/forks">
+    <img src="https://img.shields.io/github/forks/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=social" alt="GitHub forks">
+  </a>
+  <a href="https://github.com/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research/issues">
+    <img src="https://img.shields.io/github/issues/b0tacc0unt9952-hub/thunderbolt-dma-bypass-disclosure-research?style=flat-square" alt="Issues">
+  </a>
+</p>
 
-  <p>
-    <strong>Hardware Photos</strong> ↓
+<p align="center">
+  <strong>⚠️ Defensive research only</strong> – not for exploitation or sale.<br>
+  Shared after responsible disclosure attempt was ignored.
+</p>
 
-<img src="banner.jpg" alt="Thunderbolt DMA Bypass Banner" width="100%">
+<p align="center">
+  <strong>Hardware Photos ↓</strong> (real commodity setup used for repro)
+</p>
+
+<!-- YOUR FULL ORIGINAL CONTENT GOES HERE BELOW THIS LINE -->
+## Disclosure Timeline
+- Jan 29, 2026: Private disclosure to Riot Games (Vanguard) via HackerOne #35330606  
+- Jan 30, 2026: Closed ineligible as "Attacks against physical facilities" after 6 days with no human response  
+
+## Key Vectors (Redacted)
+1. Thunderbolt tunneling for legitimate, undetectable physical connection  
+2. Signed driver chain (Intel TB stack) – no unsigned code detection  
+3. Firmware spoofing as benign NVMe/eGPU device  
+4. DMA reads without CPU attribution  
+5. Behavioral detection gap – novel signature, months to train ML models  
+6. Multiple paths (USB-C adapters, M.2 enclosures, USB 4 tunneling)  
+
+## Impact
+- Retrofits existing DMA hardware to stealth mode for $50–$150  
+- Universal threat to laptops (70%+ gaming market) and desktops with TB ports  
+- No easy patch without breaking eGPUs/docks/SSDs for legit users  
+
+## Mitigations Proposed
+- Memory access attribution via Intel PT  
+- Thunderbolt device behavioral profiling  
+- Hardware memory encryption (TME/SME integration)  
+- Timing-based DMA signature detection  
+- Statistical memory bus traffic analysis  
+- Kernel-level DMA allowlisting  
+
+Not exploiting or selling — defensive research to help close hardware cheating gaps. If you're an anticheat vendor and want to discuss under NDA, reach out.
+
+Hardware security matters.
 
 Redacted research on Thunderbolt PCIe DMA bypass via firmware spoofing and commodity adapters. Privately disclosed to Riot Games (HackerOne #35330606) on Jan 29, 2026. Closed ineligible as "physical facilities" after 6 days with no human response. Shared defensively to help anticheat teams strengthen hardware protections against cheating.
 
