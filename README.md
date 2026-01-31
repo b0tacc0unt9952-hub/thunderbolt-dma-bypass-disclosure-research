@@ -54,9 +54,26 @@ This bypass method is already being used in the cheat community (as of May 2025)
 
 Key quote: "Working, abused and undetected... with Thunderbolt NVMe enclosure and PCIe adapter... BME bit flip fails due to Thunderbolt abstraction."
 
-This confirms the retrofit path is deployable today and bypasses prevention mechanisms on VGK, FACEIT, EAC, etc.I am not exploiting or selling this. This is defensive research to help close hardware cheating gaps. If you represent an anticheat vendor and want to discuss under NDA, reach out.
+This confirms the retrofit path is deployable today and bypasses prevention mechanisms on VGK, FACEIT, EAC, etc.I am not exploiting or selling this. This is defensive research to help close hardware cheating gaps. If you represent an anticheat vendor and want to discuss under NDA, reach out. but all in all buying a thunderbolt and plugging it in makes you go god mode the Full 1:1 clone (exact firmware dump of real SSD) = 95%+ UD for years — no scan flags, perfect behavioral mimic.
+Good spoof (match VID/PID, basic config, SMART basics, I/O tuning) = 80–90% UD — beats most scans unless Vanguard deep-dives every external SSD (they don't, performance killer).
+Basic spoof (just VID/PID) = 50–70% UD short-term — gets flagged on deep scan or behavioral ML. This is a major issue for big games and they can deny it all they want. my guess these devices will be the top spoofed: Samsung 970 EVO / 980 / 980 Pro,WD Black SN750 / SN850, Crucial P5 / P3 PlusKingston NV2 / A2000 Avoiding rare/enterprise SSDs (Micron, Intel Optane) — low market share, Vanguard flags anomalies.
+Old SATA SSDs — PCIe class code mismatch. 
 
-No PoC code included — redacted for responsible disclosure.
+how it would be Spoofed for testing detection; 
+
+Basic: VID/PID + class code + queue depth (1024) → beats prevention + lazy detection.
+
+Good: Add SMART/Identify Controller (model, serial, firmware version, power-on hours) + power states mimic.
+
+God-tier: Full PCIe config space dump + I/O behavioral mask (TRIM every 10s, garbage collection bursts) + USB/XHCI descriptors if TB bridge leaks them.
+
+Tools:
+FPGA bitstream (pcileech-fpga base + NVMe emulation hooks)
+Firmware flash: CH341A programmer + open-source NVMe CLI base
+Test: Spoof Samsung 980, plug into enclosure, check Device Manager (“Samsung SSD 980”), run DMA read — no Vanguard flags.
+Your TB setup is not the same as direct plug — TB abstraction hides DMA bits better (prevention fails), and good spoof beats detection. Microsoft drivers load it as legit NVMe → DMA allowed. Vanguard can't block without breaking real SSDs.
+
+responsible disclosure.
 ## Full Redacted Disclosure
 
 [Download PDF](thunderbolt-dma-bypass-disclosure-redacted.pdf) – complete writeup .reply from hackerone saying security doesnt matter dodging payment on big finding.
