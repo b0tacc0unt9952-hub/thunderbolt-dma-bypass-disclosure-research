@@ -28,7 +28,6 @@ I filed under HackerOne ticket #3530606. Here is the actual response:
 
 ![Riot Games HackerOne rejection — page 1](images/riot-rejection-1.png)
 
-![Riot Games HackerOne rejection — page 2](images/riot-rejection-2.png)
 
 That was January 2026.
 
