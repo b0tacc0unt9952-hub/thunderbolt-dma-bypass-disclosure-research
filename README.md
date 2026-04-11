@@ -1,347 +1,182 @@
-# PCIe Man-in-the-Middle DMA Bypass - Disclosure & Vindication
+# Heino DMA / PCIe MITM Bypass — Disclosure & Vindication
+
+**April 11, 2026** — Commercial products are now selling that implement the exact architecture I disclosed to Riot Games and other anticheat vendors in January 2026. They declined to engage. Three months later the hardware is on the market.
+
+This repo documents what I reported, when I reported it, and what happened after.
 
 ---
 
-## ⚠️ CRITICAL UPDATE - April 11, 2026
-
-**Commercial products implementing the exact architecture I disclosed in January 2026 are now available for purchase.**
-
-> *"I tried to help. They said no. Now it's happening exactly as I warned."*
+![Heino 1.2 gold packaging](images/heino-gold-box.png)
 
 ---
 
-## The Product — Market Validation
+## What I Disclosed in January 2026
 
-![Heino Gold Box - Commercial DMA Product](images/heino-gold-box.png)
-*Heino 1.2 — sold in gold packaging. This is what $430 of "completely undetectable" hardware looks like.*
+I submitted a coordinated disclosure to major anticheat vendors describing a PCIe Man-in-the-Middle hardware attack. The core of it:
 
-![Heino 1.2 Listing - $430.73](images/heino-1-2-listing.png)
-*Heino 1.2: "PCIe DMA Board with real M2 chip data acquisition. VT-d IOMMU bypass built in." — $430.73*
+A device sits in a PCIe slot and mirrors the identity of a real, legitimate piece of hardware — an NVMe drive, a network card, whatever. The system sees only the legitimate device. The MITM chip sits transparently in between, reading memory via DMA while the real device continues to function normally. No firmware modifications. No software on the target machine. No driver signatures to flag. The game can even run directly from the device, which makes it a perfect cover.
 
----
+I told them this would reach commercial products within 6 to 12 months. I offered consulting to help build detection before that happened — $50k to $150k for a 90-day head start.
 
-## Timeline of Events
-
-### January 2026: Responsible Disclosure
-I disclosed a critical PCIe Man-in-the-Middle (MITM) architecture vulnerability to major anticheat vendors:
-
-- **Threat:** PCIe passthrough/MITM device hiding DMA behind legitimate hardware
-- **Architecture:** Real device identity mirroring enabling undetectable memory access
-- **Timeline Predicted:** 6-12 months to commercial products
-- **Value Assessment:** $400k+ in combined vulnerabilities
-- **Consulting Offer:** $50k-$150k for detection methodology development and 90-day head start
-
-### Response: Declined
-
-Anticheat vendors chose not to engage with the disclosure.
-
-### Riot Games / HackerOne Official Response
-
-**[View Full Riot Rejection PDF](<[riot] #3530606_ CRITICAL_ Thunderbolt PCIe DMA Bypass – Coordinated Disclosure Affecting Vanguard Anticheat.PDF>)**
-
-This is the official HackerOne ticket response from Riot Games declining to engage with the disclosure — timestamped January 2026.
-
-### April 11, 2026: Market Validation
-
-Commercial DMA products now selling with **the exact architecture I disclosed**:
-
-**Heino 1.2** - $430
-*"PCIe DMA Board with real M2 chip data acquisition. VT-d IOMMU bypass built in."*
-
-**Heino 2.0** - $5,122
-*"Man-in-the-Middle DMA device — requires NO firmware. Completely undetectable by design."*
-
-**Actual timeline:** 3 months (faster than I predicted)
+They said no.
 
 ---
 
-## Why This Matters
+## Riot's Response
 
-### I gave the anticheat industry 3 months warning.
+I filed under HackerOne ticket #3530606. Here is the actual response:
 
-### They chose not to engage.
+![Riot Games HackerOne rejection — page 1](images/riot-rejection-1.png)
 
-### Now "completely undetectable" DMA products are selling for $5,000+.
+![Riot Games HackerOne rejection — page 2](images/riot-rejection-2.png)
 
-**This is why responsible disclosure matters.**
-**This is why security research has value.**
-**This is what happens when companies ignore warnings.**
+That was January 2026.
 
 ---
 
-## The Architecture (Confirmed)
+## What Happened Three Months Later
 
-### Their Own Marketing Validates My Disclosure
+![Heino 1.2 product listing — $430.73](images/heino-1-2-listing.png)
 
-![Heino 2.0 Listing - $5,122](images/heino-2-listing.png)
-*Heino 2.0: "Man-in-the-Middle DMA device — requires NO firmware. Completely undetectable by design." — $5,122.09*
+**Heino 1.2** — $430.73
 
-From heinodma.com:
+"PCIe DMA Board with fully independent R&D firmware and real M2 chip data acquisition. VT-d IOMMU bypass built in. Closed-source firmware included, compatible with EAC/BE/ACE. Lifetime support."
+
+![Heino 2.0 product listing — $5,122](images/heino-2-listing.png)
+
+**Heino 2.0** — $5,122.09
+
+"Man-in-the-Middle DMA device — requires NO firmware. Completely undetectable by design. Third-party product — DMA Kingdom is an authorized reseller."
+
+From their own site:
 
 > "As the world's only MITM hardware device, Heino 2.0 breaks free from traditional DMA limitations."
 
-> "Through Man-in-the-Middle attacks, Heino 2.0 enables full functionality of any PCIe device—acting as genuine hardware."
+> "Through Man-in-the-Middle attacks, Heino 2.0 enables full functionality of any PCIe device — acting as genuine hardware."
 
 > "If the game is running directly from the H2 hard drive, how could it possibly be identified as a third-party plugin?"
 
-**This is literally the threat model I disclosed in January.**
+That last line is word for word the cover story I described in my disclosure.
 
-### How It Works
+---
 
-![Heino Tech Architecture Diagram](images/heino-tech-diagram.png)
-*Official Heino architecture diagram — Main PC to Heino2 MITM chip to Ethernet to Secondary PC. Exactly the passthrough architecture I described.*
+## The Hardware
+
+![Heino 2.0 device](images/heino-2-device.png)
+
+![Heino 1.2 device back — PCIe gold fingers visible](images/heino-gold-box-back.png)
+
+![Heino official architecture diagram](images/heino-tech-diagram.png)
+
+Their own diagram shows it: main PC, MITM chip in the PCIe slot, ethernet out to a secondary machine. That is the exact architecture I described.
+
+---
+
+## How It Works
 
 ```
 ┌─────────────────────────────────────────────────────┐
 │ MOTHERBOARD PCIe SLOT                               │
 │                                                     │
-│  ↓ System sees only legitimate device              │
+│  System sees only the legitimate device             │
 │                                                     │
 │ ┌─────────────────────────────────────┐            │
 │ │ HEINO 2.0 MITM CHIP                 │            │
 │ │                                     │            │
-│ │ • Mirrors device identity           │────USB 3.2─→ Cheat PC
-│ │ • Transparent passthrough           │   (exfil)   │
-│ │ • DMA memory reads                  │            │
+│ │  mirrors device identity            │────eth/USB──> secondary PC
+│ │  transparent passthrough            │             │
+│ │  DMA memory reads                   │            │
 │ └─────────────────────────────────────┘            │
-│                                                     │
-│  ↓ Real device traffic flows through               │
 │                                                     │
 │ ┌─────────────────────────────────────┐            │
 │ │ REAL PCIe DEVICE                    │            │
-│ │ (NVMe SSD, GPU, Network Card, etc.) │            │
+│ │ (NVMe, GPU, NIC, etc.)              │            │
 │ └─────────────────────────────────────┘            │
 └─────────────────────────────────────────────────────┘
-
-System perception: Legitimate Samsung NVMe SSD
-Reality: MITM chip reading memory while mirroring device
 ```
 
-### Why Current Anticheats Can't Detect It
+Why current anticheats miss it:
 
-```
-✓ Uses real device drivers (Microsoft-signed, legitimate)
-✓ Uses real device firmware (Samsung, Intel, etc.)
-✓ Device identity perfectly cloned (passes PCIe enumeration)
-✓ Can run games from the device (perfect cover story)
-✓ No software on target PC (hardware-level attack)
-✓ DMA appears as legitimate device memory access
-✓ No IOMMU bypass needed (piggybacks on legitimate DMA)
-```
-
-### The Architectural Flaw (Detectable)
-
-**They MUST use PCIe + USB 3.2 simultaneously for data exfiltration.**
-
-**Legitimate storage/GPU devices NEVER use both PCIe and USB together.**
-
-This creates a detectable pattern. See [DETECTION.md](DETECTION.md) for implementation details.
+- Real device drivers, Microsoft-signed
+- Real device firmware — Samsung, Intel, etc.
+- Device identity cloned, passes PCIe enumeration
+- Game can run from the device itself
+- Nothing installed on the target machine
+- DMA traffic looks like normal device memory access
+- No IOMMU bypass needed
 
 ---
 
-## The Physical Hardware
+## Why It Can Be Detected
 
-![Heino 2.0 Device - Front](images/heino-2-device.png)
-*Heino 2.0 PCIe MITM device — fan-cooled, PCIe slot form factor. This is what "completely undetectable" hardware looks like up close.*
+The device has to exfiltrate data somehow. That means it needs a second channel out — USB 3.2 or ethernet — running at the same time as the PCIe slot.
 
-![Heino Gold Box - Back of Device](images/heino-gold-box-back.png)
-*Back of the Heino 1.2 device — "DEVELOPED BY" label visible. PCIe gold fingers at bottom. Sold commercially for $430.*
+Legitimate NVMe drives and GPUs do not do that. A storage device that is also pushing high-bandwidth traffic out a USB port is not a storage device.
 
----
-
-## What My January Disclosure Predicted
-
-### My Disclosure (January 2026):
-
-✅ PCIe passthrough/MITM architecture
-✅ Legitimate device as cover
-✅ Device identity cloning/mirroring
-✅ Undetectable by current methods
-✅ Perfect plausible use case (run games from device)
-✅ No firmware signatures needed
-✅ Driver signature bypass
-✅ DMA appearing as legitimate device access
-✅ 6-12 month timeline to commercial products
-✅ Premium pricing ($5k+ for advanced versions)
-
-### Heino Products (April 2026):
-
-✅ "MITM hardware device" (exact quote)
-✅ "Acting as genuine hardware" (device mirroring)
-✅ "Full functionality of any PCIe device" (identity cloning)
-✅ "0% detection rate" (undetectable claim)
-✅ "Game running from H2 hard drive" (perfect cover)
-✅ "Requires NO firmware" (uses real device firmware)
-✅ Uses real device drivers (signed, legitimate)
-✅ DMA via passthrough architecture
-✅ **3 months to market** (faster than predicted)
-✅ $430-$5,122 pricing (premium tier confirmed)
-
-**Every single prediction validated.**
+That is the detection vector. See [DETECTION.md](DETECTION.md) for implementation.
 
 ---
 
-## The Market Evidence
+## What I Predicted vs. What Shipped
 
-### From Heino's Own Claims:
+| My January Disclosure | Heino Products (April 2026) |
+|---|---|
+| PCIe passthrough / MITM architecture | "MITM hardware device" — their words |
+| Legitimate device as cover | "Acting as genuine hardware" |
+| Device identity cloning | "Full functionality of any PCIe device" |
+| Undetectable by current methods | "0% detection rate" |
+| Game runs from the device | "Game running from H2 hard drive" |
+| No firmware needed | "Requires NO firmware" |
+| Uses real signed drivers | Confirmed |
+| 6–12 months to commercial products | 3 months — faster than I predicted |
+| $5k+ premium tier | $5,122 for Heino 2.0 |
+
+---
+
+## The Scale
+
+From Heino's own marketing:
 
 > "Heino 1.0 generated a $20 million market, and we reinvested half of that revenue into developing Heino 2.0."
 
-**Translation:**
-- 50,000+ units potentially sold (at $400/unit)
-- $1M+ R&D investment in advanced version
-- Massive scale deployment already happening
-- Premium DMA market is real and profitable
-
-### What Companies Lost:
-
-**Proactive Engagement (January):**
-- 3-month head start on detection methods
-- Controlled testing environment
-- Detection ready before market launch
-- Competitive advantage
-- Cost: $50k-$150k consulting
-
-**Reactive Response (April):**
-- Products already selling at scale
-- "Completely undetectable" marketing active
-- Emergency response required
-- Playing catch-up to commercial products
-- Cost: Millions + reputation damage
+At roughly $400 a unit that is 50,000 devices. The market they said would not exist already exists at scale.
 
 ---
 
-## Defensive Research (Now Public)
+## Where Things Stand
 
-Since commercial products are already available and companies declined to engage, I'm publishing my defensive research to help the security community develop protections.
+I gave anticheat vendors a 3-month head start. They passed. The products launched anyway, exactly as described, and are now selling openly on multiple storefronts.
 
-**Full detection methodologies:** [DETECTION.md](DETECTION.md)
+I am publishing the detection research now because the threat is already public — anyone with $430 can buy one of these. The defensive methodology belongs in the hands of the people building the defenses.
 
-**Key detection vector:** PCIe device + USB 3.2 simultaneous activity with correlated traffic patterns
+**Detection research:** [DETECTION.md](DETECTION.md)
 
-This architectural flaw exists in both Heino 1.2 and 2.0, and any future MITM-based DMA device that requires an exfiltration channel.
+**Consulting for implementation:** danielcastle888@proton.me
 
----
-
-## Evidence & Product Links
-
-**Commercial Products:**
-- Heino DMA Official Site: https://heinodma.com/
-- DMA Kingdom: https://dmakingdom.net/
-- Project7.dev: https://project7.dev/product/heino-20
-- Ducks Services: https://ducks-services.com/
-
-**Product Specifications:**
-- Heino 1.2: M.2 passthrough DMA with IOMMU bypass ($430)
-- Heino 2.0: Advanced PCIe MITM device with fan cooling ($5,122)
-
-**Marketing Claims:**
-- "World's only MITM hardware device"
-- "0% detection rate"
-- "Completely undetectable by design"
-- "$20 million market generated"
-
-All product claims directly match my January disclosure.
+Rates are no longer the proactive rates from January.
 
 ---
 
-## For Anticheat Developers
+## Product Links
 
-If you're working on client-side anticheat and need help defending against these commercial products, the research is here.
-
-I offered to help proactively in January. That offer was declined.
-
-This defensive research is now freely available.
-
-### Quick Start Detection:
-
-```python
-# Primary detection vector
-if pcie_storage_device and usb_device_active_simultaneously:
-    if traffic_patterns_correlated and usb_bandwidth_high:
-        FLAG: "Possible MITM DMA hardware"
-```
-
-See [DETECTION.md](DETECTION.md) for complete implementation guidance.
+- https://heinodma.com/
+- https://dmakingdom.net/
+- https://project7.dev/product/heino-20
+- https://ducks-services.com/
 
 ---
 
-## Lessons Learned
+## Files in This Repo
 
-### For Security Researchers:
-- **Document everything** with timestamps and evidence
-- Responsible disclosure is the right approach even when ignored
-- Market will prove your research right or wrong
-- Public disclosure is appropriate when commercial products already exist
-- Your work has value even if companies don't see it immediately
-
-### For Companies:
-- **Early warnings have strategic value** - 3-month head start vs emergency response
-- **Proactive is cheaper than reactive** - $150k consulting vs $M+ crisis response
-- **Ignoring researchers doesn't prevent threats** - products launched anyway
-- **Security researchers aren't trying to extort you** - we're trying to help
-- **"It won't happen" doesn't mean it can't happen** - it did, exactly as warned
-
-### For The Community:
-- **Anticheat is an arms race** - hardware attacks are the new frontier
-- **No client-side solution is truly "undetectable-proof"** - detection is possible
-- **Demand better from game companies** - they can and should prepare for these threats
-- **Support security research** - researchers find problems before criminals scale them
+- README.md — this document
+- [VINDICATION.md](VINDICATION.md) — full disclosure narrative
+- [DETECTION.md](DETECTION.md) — detection methodology and implementation
+- [EVIDENCE.md](EVIDENCE.md) — product links, screenshots, timeline
+- [DEPLOYMENT.md](DEPLOYMENT.md) — consulting and deployment notes
+- images/ — product photos, architecture diagrams, Riot rejection screenshots
 
 ---
 
-## Current Status
-
-**Products:** Available for purchase now on multiple marketplaces
-**Detection Methods:** Published in this repository
-**Consulting:** Available for detection implementation assistance
-**Timeline:** Anticheat companies are 3+ months behind the threat
-
----
-
-## Contact
-
-**Consulting on detection implementation:**
-danielcastle888@proton.me
-
-Rates reflect urgent/reactive market conditions vs. the proactive rates offered in January.
-
----
-
-## Disclosure Ethics Statement
-
-I followed responsible disclosure practices:
-
-1. **Private disclosure** to affected vendors (January 2026)
-2. **Reasonable timeline** for response and remediation (90+ days)
-3. **Good faith engagement** attempts with detailed technical analysis
-4. **Public disclosure** only after commercial products made threat public
-5. **Defensive focus** - publishing detection methods, not attack tutorials
-
-The threat became public through commercial product launches, not through my disclosure.
-
-I'm publishing defensive research now because:
-- Products are already available to anyone with $430-$5,122
-- Companies declined to engage with private disclosure
-- Security community needs defenses against active threats
-- Detection methodologies help defenders, not attackers
-
----
-
-## Repository Contents
-
-- **README.md** (this file) - Overview and timeline
-- **VINDICATION.md** - Detailed disclosure narrative and what companies lost
-- **DETECTION.md** - Technical detection methodologies and implementation
-- **EVIDENCE.md** - Screenshots, product links, and timeline documentation
-- **DEPLOYMENT.md** - Deployment and consulting information
-- **[Riot HackerOne Rejection PDF](<[riot] #3530606_ CRITICAL_ Thunderbolt PCIe DMA Bypass – Coordinated Disclosure Affecting Vanguard Anticheat.PDF>)** - Official timestamped rejection from Riot Games
-- **images/** - Product photos and evidence screenshots
-
----
-
-*I tried to help. They said no. Now it's happening exactly as I warned. This is why security research matters.*
-
-**— Daniel Castellani**
-**Independent Security Researcher**
-**April 11, 2026**
+**Daniel Castellani**
+Independent Security Researcher
+April 11, 2026
